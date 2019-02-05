@@ -9,7 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res, next) {
-  res.render("index", { title: "Express" });
+  res.redirect("/upload");
 });
 
 // Gets the signed s3 request to save a file
@@ -58,19 +58,26 @@ router.get("/sign-s3-download/", (req, res) => {
   res.end();
 });
 
-// todo: download file with given id
-router.get("/download/:id", (req, res) => {
-  res.render("download", { title: "Download", id: req.params.id });
+router.get("/download/:fileKey", async (req, res) => {
+  // Check if the file exists in s3; if it doesn't, 404
+  const s3 = new aws.S3();
+  const fileKey = req.params.fileKey;
+  try {
+    const result = await s3
+      .headObject({
+        Bucket: keys.s3Bucket,
+        Key: fileKey
+      })
+      .promise();
+
+    res.render("download", { title: "Download", fileKey });
+  } catch (err) {
+    res.render("error", { error: { status: err.statusCode } });
+  }
 });
 
-// todo: render the upload page, with a file picker
 router.get("/upload", (req, res) => {
   res.render("upload", { title: "Upload" });
-});
-
-// todo: upload file to db and return its download id
-router.post("/upload", (req, res) => {
-  res.send({ upload: "recieved" });
 });
 
 module.exports = router;
