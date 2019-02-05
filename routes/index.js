@@ -7,7 +7,12 @@ router.get("/", function(req, res, next) {
 
 // todo: download file with given id
 router.get("/download/:id", (req, res) => {
-  res.send({ download: req.params.id });
+  res.render("download", { title: "Download", id: req.params.id });
+});
+
+// todo: render the upload page, with a file picker
+router.get("/upload", (req, res) => {
+  res.render("upload", { title: "Upload" });
 });
 
 // todo: upload file to db and return its download id
