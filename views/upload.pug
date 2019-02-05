@@ -1,5 +1,12 @@
 extends layout
 
+block head-extras
+  script(src='/js/upload.js', defer)
+
 block content
   h1= title
-  p Welcome to the upload page
+  input#file-input(type="file")
+  p#status Drop a file
+  div#success
+  form(method='POST', action='/upload')
+    input(type='submit', value='Drop')
