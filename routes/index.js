@@ -1,11 +1,12 @@
 const keys = require("../config/keys.js");
+const shortid = require("shortid");
 const aws = require("aws-sdk");
 aws.config.region = "us-east-2"; // I don't think you need this anymore but, just in case
 aws.config.accessKeyId = keys.awsAccessKeyId;
 aws.config.secretAccessKey = keys.awsSecretKeyId;
 
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
 router.get("/", function(req, res, next) {
   res.render("index", { title: "Express" });
@@ -16,9 +17,16 @@ router.get("/sign-s3", (req, res) => {
   const s3 = new aws.S3();
   const fileName = req.query["file-name"];
   const fileType = req.query["file-type"];
+
+  // Generate the short id here
+  const origFileExtension = fileName.slice(
+    ((fileName.lastIndexOf(".") - 1) >>> 0) + 2
+  );
+  const fileKey = shortid.generate() + "." + origFileExtension;
+
   const s3Params = {
     Bucket: keys.s3Bucket,
-    Key: fileName,
+    Key: fileKey,
     Expires: 60,
     ContentType: fileType,
     ACL: "private"
@@ -31,7 +39,8 @@ router.get("/sign-s3", (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://${keys.s3Bucket}.s3.amazonaws.com/${fileName}`
+      fileKey: fileKey,
+      url: `https://${keys.s3Bucket}.s3.amazonaws.com/${fileKey}`
     };
     res.write(JSON.stringify(returnData));
     res.end();

@@ -5,8 +5,6 @@ block head-extras
 
 block content
   h1= title
-  input#file-input(type="file")
   p#status Drop a file
+  input#file-input(type="file")
   div#success
-  form(method='POST', action='/upload')
-    input(type='submit', value='Drop')

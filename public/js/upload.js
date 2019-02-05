@@ -5,7 +5,6 @@ function uploadFile(file, signedRequest, url) {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        document.getElementById("success").value = "Yes";
       } else {
         alert("Could not upload file.");
       }
@@ -21,6 +20,8 @@ function getSignedRequest(file) {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
+        document.getElementById("success").textContent =
+          "Generated filename: " + response.fileKey;
         uploadFile(file, response.signedRequest, response.url);
       } else {
         alert("Could not get signed URL.");
@@ -31,7 +32,7 @@ function getSignedRequest(file) {
 }
 
 // When the document loads, listen for file-input changes
-// When the file input is updated, get a signed request from aws
+// When the file input is updated, get a signed request from aws, then send it off
 (() => {
   document.getElementById("file-input").onchange = () => {
     const files = document.getElementById("file-input").files;
