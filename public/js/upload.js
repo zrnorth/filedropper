@@ -24,7 +24,7 @@ function getSignedRequest(file) {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
         document.getElementById("success").textContent =
-          "Generated filename: " + response.fileKey;
+          "Download at the link: /download/" + response.fileKey;
         uploadFile(file, response.signedRequest, response.url);
       } else {
         alert("Could not get signed URL.");

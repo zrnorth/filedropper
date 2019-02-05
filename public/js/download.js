@@ -4,8 +4,8 @@ function getSignedRequest(filekey) {
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
-        console.log(response);
+        const signedUrl = JSON.parse(xhr.responseText);
+        window.location.assign(signedUrl);
       } else {
         alert("Could not get signed download URL.");
       }
