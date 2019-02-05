@@ -13,7 +13,7 @@ router.get("/", function(req, res, next) {
 });
 
 // Gets the signed s3 request to save a file
-router.get("/sign-s3", (req, res) => {
+router.get("/sign-s3-upload", (req, res) => {
   const s3 = new aws.S3();
   const fileName = req.query["file-name"];
   const fileType = req.query["file-type"];
@@ -45,6 +45,17 @@ router.get("/sign-s3", (req, res) => {
     res.write(JSON.stringify(returnData));
     res.end();
   });
+});
+
+router.get("/sign-s3-download/", (req, res) => {
+  const s3 = new aws.S3();
+  const url = s3.getSignedUrl("getObject", {
+    Bucket: keys.s3Bucket,
+    Key: req.query["file-key"],
+    Expires: 300
+  });
+  res.write(JSON.stringify(url));
+  res.end();
 });
 
 // todo: download file with given id

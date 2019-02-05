@@ -1,6 +1,10 @@
 extends layout
 
+block head-extras
+  script(src='/js/download.js', defer)
+
 block content
   h1= title
   p Welcome to the download page.
-  p Your download id is #{id}
+  p Attempt to download: 
+  button#download-button #{id}
