@@ -4,5 +4,10 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+/* On the upload page, don't show the upload link until it's ready. */
+#download-link {
+  display: none;
 }

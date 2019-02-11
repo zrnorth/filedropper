@@ -23,8 +23,7 @@ function getSignedRequest(file) {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.responseText);
-        document.getElementById("success").textContent =
-          "Download at the link: /download/" + response.fileKey;
+        updateDownloadLink(response.fileKey);
         uploadFile(file, response.signedRequest, response.url);
       } else {
         alert("Could not get signed URL.");
@@ -32,6 +31,17 @@ function getSignedRequest(file) {
     }
   };
   xhr.send();
+}
+
+// Helper function to update the UI with the link to the newly uploaded file
+function updateDownloadLink(fileKey) {
+  const successElement = document.getElementById("success-message");
+  successElement.textContent = "Success! Here's your download link:";
+
+  const linkElement = document.getElementById("download-link");
+  linkElement.textContent = fileKey;
+  linkElement.href = `/download/${fileKey}`;
+  linkElement.style.display = "block";
 }
 
 // When the document loads, listen for file-input changes

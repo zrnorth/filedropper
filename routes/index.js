@@ -47,6 +47,7 @@ router.get("/sign-s3-upload", (req, res) => {
   });
 });
 
+// Get the signed s3 request to download a file
 router.get("/sign-s3-download/", (req, res) => {
   const s3 = new aws.S3();
   const url = s3.getSignedUrl("getObject", {
@@ -56,6 +57,12 @@ router.get("/sign-s3-download/", (req, res) => {
   });
   res.write(JSON.stringify(url));
   res.end();
+});
+
+router.get("/download", async (req, res) => {
+  res.render("error", {
+    error: { status: "404", message: "Need a download key" }
+  });
 });
 
 router.get("/download/:fileKey", async (req, res) => {
@@ -72,7 +79,9 @@ router.get("/download/:fileKey", async (req, res) => {
 
     res.render("download", { title: "Download", fileKey });
   } catch (err) {
-    res.render("error", { error: { status: err.statusCode } });
+    res.render("error", {
+      error: { status: err.statusCode, message: err.message }
+    });
   }
 });
 
