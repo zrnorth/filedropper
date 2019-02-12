@@ -4,8 +4,13 @@ block head-extras
   script(src='/js/upload.js', defer)
 
 block content
-  h1= title
-  p#status Drop a file:
-  input#file-input(type="file")
-  div#success-message
-  a#download-link
+  div.upload
+    h1 Filedropper
+    h2 A simple app for transferring files. 
+    p Upload a single file below and get an anonymized download link. It expires in 24 hours.
+    p That's it.
+    input(type="file", name="file", id="file")
+    label(for="file") Choose a file
+    p.success
+    h2
+      a.download-link

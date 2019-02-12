@@ -15,8 +15,8 @@ function getSignedRequest(filekey) {
 }
 
 (() => {
-  document.getElementById("download-button").onclick = () => {
-    const filekey = document.getElementById("download-button").textContent;
+  document.querySelector(".download button").onclick = () => {
+    const filekey = document.querySelector(".download button").textContent;
     if (!filekey) {
       return alert("Null filekey.");
     }

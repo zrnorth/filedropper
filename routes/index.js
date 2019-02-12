@@ -9,7 +9,11 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res, next) {
-  res.redirect("/upload");
+  res.render("upload");
+});
+
+router.get("/upload", (req, res) => {
+  res.redirect("/");
 });
 
 // Gets the signed s3 request to save a file
@@ -77,16 +81,12 @@ router.get("/download/:fileKey", async (req, res) => {
       })
       .promise();
 
-    res.render("download", { title: "Download", fileKey });
+    res.render("download", { fileKey });
   } catch (err) {
     res.render("error", {
       error: { status: err.statusCode, message: err.message }
     });
   }
-});
-
-router.get("/upload", (req, res) => {
-  res.render("upload", { title: "Upload" });
 });
 
 module.exports = router;

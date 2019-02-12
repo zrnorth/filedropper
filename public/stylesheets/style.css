@@ -1,13 +1,57 @@
+:root {
+  --color-dark: #627264;
+  --color-light: #ad9baa;
+  --color-background: #b5dfca;
+}
+
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: var(--color-background);
 }
 
 a {
-  color: #00b7ff;
+  color: var(--color-light);
+}
+a:hover {
+  color: var(--color-dark);
 }
 
-/* On the upload page, don't show the upload link until it's ready. */
-#download-link {
-  display: none;
+h1 {
+  font-size: 2.441em;
+}
+
+h2 {
+  font-size: 1.953em;
+}
+
+/* We hide the input since we can't style it, and style the label instead (below) */
+.upload input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+/* Since we treat both the input and button as buttons, they share styles */
+.upload input + label,
+button {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: white;
+  background-color: black;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.625rem 1.25rem;
+  border: 2px solid var(--color-dark);
+  border-radius: 5px;
+  background-color: var(--color-light);
+}
+
+.upload input:focus + label,
+.upload input + label:hover,
+button:hover {
+  background-color: var(--color-dark);
 }

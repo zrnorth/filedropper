@@ -4,7 +4,8 @@ block head-extras
   script(src='/js/download.js', defer)
 
 block content
-  h1= title
-  p This link will expire in 24 hours.
-  p Your file is available here:
-  button#download-button #{fileKey}
+  div.download
+    h1 Download
+    p This link will expire in 24 hours.
+    p Your file is available here:
+    button #{fileKey}

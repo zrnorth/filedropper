@@ -35,10 +35,13 @@ function getSignedRequest(file) {
 
 // Helper function to update the UI with the link to the newly uploaded file
 function updateDownloadLink(fileKey) {
-  const successElement = document.getElementById("success-message");
+  const inputLabelElement = document.querySelector("label");
+  inputLabelElement.style.display = "none";
+
+  const successElement = document.querySelector(".upload .success");
   successElement.textContent = "Success! Here's your download link:";
 
-  const linkElement = document.getElementById("download-link");
+  const linkElement = document.querySelector(".upload .download-link");
   linkElement.textContent = fileKey;
   linkElement.href = `/download/${fileKey}`;
   linkElement.style.display = "block";
@@ -47,8 +50,8 @@ function updateDownloadLink(fileKey) {
 // When the document loads, listen for file-input changes
 // When the file input is updated, get a signed request from aws, then send it off
 (() => {
-  document.getElementById("file-input").onchange = () => {
-    const files = document.getElementById("file-input").files;
+  document.querySelector(".upload input").onchange = () => {
+    const files = document.querySelector(".upload input").files;
     const file = files[0];
     if (file == null) {
       return alert("No file selected.");
